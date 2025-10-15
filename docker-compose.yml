@@ -6,7 +6,7 @@ services:
             - "8080:8080"
         environment:
             - SPRING_PROFILES_ACTIVE=prod
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mydb
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/backend
         depends_on:
             - db
         restart: unless-stopped
