@@ -30,12 +30,16 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
-      - name: Copy image to server
+      - name: Copy files to server
         if: github.ref == 'refs/heads/main'
         run: |
           scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
             /tmp/docker-images/backend-latest.tar.gz \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/
+            
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            docker-compose.yml \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/opt/backend/
 
       - name: Deploy on remote server
         if: github.ref == 'refs/heads/main'
