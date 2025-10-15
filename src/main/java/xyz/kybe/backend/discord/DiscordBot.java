@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,9 @@ public class DiscordBot {
 			logger.info("Starting Discord bot...");
 
 			jda = JDABuilder.createDefault(token)
+				.enableIntents(
+					GatewayIntent.MESSAGE_CONTENT
+				)
 				.disableCache(
 					CacheFlag.VOICE_STATE,
 					CacheFlag.EMOJI,
