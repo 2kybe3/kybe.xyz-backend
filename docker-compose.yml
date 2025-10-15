@@ -10,6 +10,8 @@ services:
         depends_on:
             - db
         restart: unless-stopped
+        volumes:
+            - "./application.yml:/app/application.yml:ro"
 
     db:
         image: postgres:18-alpine
