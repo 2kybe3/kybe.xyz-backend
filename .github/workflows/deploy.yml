@@ -18,12 +18,6 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
       - name: Build Docker Image
         run: |
           docker build -t backend:${{ github.sha }} .
