@@ -1,0 +1,21 @@
+spring:
+    application:
+        name: "backend"
+    datasource:
+        url: "jdbc:postgresql://localhost:5432/backend"
+        username: "backend"
+        password: "backend"
+    jpa:
+        hibernate:
+            ddl-auto: "update"
+        show-sql: true
+        open-in-view: false
+    spring:
+        cache:
+            type: caffeine
+            caffeine: maximumSize=500,expireAfterWrite=10ms
+
+discord:
+    token: "token"
+    admin-id: "admin-id"
+    log-channel: "log-channel"

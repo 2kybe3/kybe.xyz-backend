@@ -1,62 +1,62 @@
 name: Build & Deploy
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  build-and-deploy:
-    runs-on: self-hosted
+    build-and-deploy:
+        runs-on: self-hosted
 
-    steps:
-      - uses: actions/checkout@v3
+        steps:
+            -   uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: |
-          docker build -t backend:${{ github.sha }} .
-          docker tag backend:${{ github.sha }} backend:latest
+            -   name: Build Docker Image
+                run: |
+                    docker build -t backend:${{ github.sha }} .
+                    docker tag backend:${{ github.sha }} backend:latest
 
-      - name: Export and compress Docker image
-        run: |
-          mkdir -p /tmp/docker-images
-          docker save backend:latest | gzip > /tmp/docker-images/backend-latest.tar.gz
+            -   name: Export and compress Docker image
+                run: |
+                    mkdir -p /tmp/docker-images
+                    docker save backend:latest | gzip > /tmp/docker-images/backend-latest.tar.gz
 
-      - name: Setup SSH key
-        if: github.ref == 'refs/heads/main'
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.RUNNER_SSH_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+            -   name: Setup SSH key
+                if: github.ref == 'refs/heads/main'
+                run: |
+                    mkdir -p ~/.ssh
+                    echo "${{ secrets.RUNNER_SSH_KEY }}" > ~/.ssh/deploy_key
+                    chmod 600 ~/.ssh/deploy_key
+                    ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
-      - name: Copy files to server
-        if: github.ref == 'refs/heads/main'
-        run: |
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            /tmp/docker-images/backend-latest.tar.gz \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/
-            
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            docker-compose.yml \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/opt/backend/
+            -   name: Copy files to server
+                if: github.ref == 'refs/heads/main'
+                run: |
+                    scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+                      /tmp/docker-images/backend-latest.tar.gz \
+                      ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/
 
-      - name: Deploy on remote server
-        if: github.ref == 'refs/heads/main'
-        run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            gunzip -c /tmp/backend-latest.tar.gz | docker load
-          
-            cd /opt/backend
-            docker-compose up -d
-          
-            docker image prune -f
-            rm -f /tmp/backend-latest.tar.gz
-          EOF
+                    scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+                      docker-compose.yml \
+                      ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/opt/backend/
 
-      - name: Cleanup
-        if: always()
-        run: |
-          rm -rf /tmp/docker-images
-          rm -f ~/.ssh/deploy_keys
+            -   name: Deploy on remote server
+                if: github.ref == 'refs/heads/main'
+                run: |
+                    ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+                      ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+                      gunzip -c /tmp/backend-latest.tar.gz | docker load
+
+                      cd /opt/backend
+                      docker-compose up -d
+
+                      docker image prune -f
+                      rm -f /tmp/backend-latest.tar.gz
+                    EOF
+
+            -   name: Cleanup
+                if: always()
+                run: |
+                    rm -rf /tmp/docker-images
+                    rm -f ~/.ssh/deploy_keys
