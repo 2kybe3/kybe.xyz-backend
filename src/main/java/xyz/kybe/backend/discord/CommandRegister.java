@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import xyz.kybe.backend.discord.commands.DecompressLogCommand;
+import xyz.kybe.backend.discord.commands.DirectMessageCommand;
+import xyz.kybe.backend.discord.commands.QuoteMessageCommand;
 
 @Component
 public class CommandRegister {
@@ -16,15 +19,18 @@ public class CommandRegister {
 	private final DiscordBot discordBot;
 	private final QuoteMessageCommand quoteMessageCommand;
 	private final DirectMessageCommand directMessageCommand;
+	private final DecompressLogCommand decompressLogCommand;
 
 	public CommandRegister(
 		DiscordBot discordBot,
 		QuoteMessageCommand quoteMessageCommand,
-		DirectMessageCommand directMessageCommand
+		DirectMessageCommand directMessageCommand,
+		DecompressLogCommand decompressLogCommand
 	) {
 		this.discordBot = discordBot;
 		this.quoteMessageCommand = quoteMessageCommand;
 		this.directMessageCommand = directMessageCommand;
+		this.decompressLogCommand = decompressLogCommand;
 	}
 
 	@PostConstruct
@@ -43,18 +49,17 @@ public class CommandRegister {
 					Commands.message("Save Quote")
 						.setIntegrationTypes(IntegrationType.USER_INSTALL, IntegrationType.GUILD_INSTALL),
 					Commands.context(Command.Type.USER, "Get User Quotes")
+						.setIntegrationTypes(IntegrationType.USER_INSTALL, IntegrationType.GUILD_INSTALL),
+					Commands.message("Decompress Log")
 						.setIntegrationTypes(IntegrationType.USER_INSTALL, IntegrationType.GUILD_INSTALL)
-				)
-				.queue(
-					ignored -> logger.info("Direct Message command registered successfully"),
-					error -> logger.error("Failed to register Direct Message command", error)
-				);
+				).queue();
 
 			jda.addEventListener(directMessageCommand);
 			jda.addEventListener(quoteMessageCommand);
-			logger.info("Direct Message handler initialized successfully");
+			jda.addEventListener(decompressLogCommand);
+			logger.info("All command handlers initialized successfully");
 		} catch (Exception e) {
-			logger.error("Failed to initialize Direct Message handler", e);
+			logger.error("Failed to initialize command handlers", e);
 		}
 	}
 }

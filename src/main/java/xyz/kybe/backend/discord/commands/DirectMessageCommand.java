@@ -1,4 +1,4 @@
-package xyz.kybe.backend.discord;
+package xyz.kybe.backend.discord.commands;
 
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
