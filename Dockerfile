@@ -8,7 +8,7 @@ RUN ./gradlew dependencies --no-daemon || true
 
 COPY src ./src
 
-RUN ./gradlew build --no-deamon
+RUN ./gradlew build --no-daemon
 
 FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
