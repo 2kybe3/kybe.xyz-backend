@@ -49,7 +49,7 @@ jobs:
                       gunzip -c /tmp/backend-latest.tar.gz | docker load
 
                       cd /opt/backend
-                      dockercompose up -d
+                      docker compose up -d
 
                       docker image prune -f
                       rm -f /tmp/backend-latest.tar.gz
