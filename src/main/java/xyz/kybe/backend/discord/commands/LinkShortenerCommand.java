@@ -53,12 +53,6 @@ public class LinkShortenerCommand extends ListenerAdapter {
 			return;
 		}
 
-		var existing = shortLinkRepository.getByRedirectUrl(url);
-		if (!existing.isEmpty()) {
-			event.reply(this.prefix + existing.getFirst().getCode()).queue();
-			return;
-		}
-
 		String mode = event.getOption("mode") != null ? Objects.requireNonNull(event.getOption("mode")).getAsString().toLowerCase() : "ascii";
 
 		String code;
