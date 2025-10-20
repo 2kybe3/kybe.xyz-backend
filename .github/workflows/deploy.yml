@@ -37,7 +37,7 @@ jobs:
       - name: Copy stack file to server
         run: |
           scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no docker-stack.yml \
-              ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:/opt/backend/docker-stack.yml
+          ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:/opt/backend/docker-stack.yml
 
       - name: Deploy on remote server
         run: |
