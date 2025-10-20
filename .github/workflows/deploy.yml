@@ -54,7 +54,7 @@ jobs:
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
 
-        - name: Cleanup
+      - name: Cleanup
         if: always()
         run: |
           rm -rf ~/.ssh/deploy_key
