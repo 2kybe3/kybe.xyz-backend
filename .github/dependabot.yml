@@ -1,18 +1,22 @@
 version: 2
 updates:
     - package-ecosystem: gradle
+      versioning-strategy: increase
       directory: /
       schedule:
           interval: daily
     - package-ecosystem: docker-compose
+      versioning-strategy: increase
       directory: /
       schedule:
           interval: daily
     - package-ecosystem: docker
+      versioning-strategy: increase
       directory: /
       schedule:
           interval: daily
     - package-ecosystem: github-actions
+      versioning-strategy: increase
       directory: /
       schedule:
           interval: daily
