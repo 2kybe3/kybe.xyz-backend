@@ -6,6 +6,7 @@ networks:
 services:
     backend:
         image: reg.kybe.xyz/kybe-pub/backend:latest
+        container_name: backend
         networks:
             - backend-net
         ports:
@@ -36,6 +37,7 @@ services:
 
     db:
         image: postgres:18-alpine
+        container_name: db
         networks:
             - backend-net
         environment:
