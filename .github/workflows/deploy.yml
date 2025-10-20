@@ -34,17 +34,18 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ vars.SERVER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
-      - name: Copy stack file to server
+      - name: Copy compose file to server
         run: |
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no docker-stack.yml \
-          ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:/opt/backend/docker-stack.yml
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no docker-compose.yml \
+          ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:/opt/backend/docker-compose.yml
 
       - name: Deploy on remote server
         run: |
           ssh -t -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }} \
-            "echo '$REGISTRY_PASS' | docker login $REGISTRY_URL -u '$REGISTRY_USER' --password-stdin && \
-             cd /opt/backend && \
-             docker stack deploy -c docker-stack.yml prod -d"
+          "echo '$REGISTRY_PASS' | docker login $REGISTRY_URL -u '$REGISTRY_USER' --password-stdin && \
+          cd /opt/backend && \
+          docker pull ${{ env.IMAGE }}:latest &&
+          docker compose up -d --force-recreate"
         env:
           REGISTRY_PASS: ${{ secrets.REGISTRY_PASS }}
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
