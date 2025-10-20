@@ -64,8 +64,9 @@ public class LinkShortenerCommand extends ListenerAdapter {
 		String code;
 		do {
 			code = switch (mode) {
-				case "emoji" -> generateEmojiCode(4);
-				case "chinese" -> generateChineseCode(4);
+				case "emoji" -> generateEmojiCode(8);
+				case "chinese" -> generateChineseCode(8);
+				case "full" -> generateFullUnicodeCode(1);
 				default -> generateAsciiCode(8);
 			};
 		} while (shortLinkRepository.existsById(code));
@@ -76,6 +77,22 @@ public class LinkShortenerCommand extends ListenerAdapter {
 		shortLinkRepository.save(shortLink);
 
 		event.reply(this.prefix + code).queue();
+	}
+
+	private String generateFullUnicodeCode(int length) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			int codePoint;
+			while (true) {
+				codePoint = random.nextInt(Character.MAX_CODE_POINT + 1);
+				if (Character.isSurrogate((char) codePoint)) continue;
+				if (Character.isWhitespace(codePoint)) continue;
+				if ("\"#%/<>?\\^`{|}".indexOf(codePoint) >= 0) continue;
+				break;
+			}
+			sb.appendCodePoint(codePoint);
+		}
+		return sb.toString();
 	}
 
 	private String generateAsciiCode(int length) {
