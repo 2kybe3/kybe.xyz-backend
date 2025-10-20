@@ -44,7 +44,7 @@ jobs:
           ssh -t -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }} \
             "echo '$REGISTRY_PASS' | docker login $REGISTRY_URL -u '$REGISTRY_USER' --password-stdin && \
              cd /opt/backend && \
-             docker stack deploy -c docker-stack.yml backend"
+             docker stack deploy -c docker-stack.yml prod -d"
         env:
           REGISTRY_PASS: ${{ secrets.REGISTRY_PASS }}
           REGISTRY_URL: ${{ env.REGISTRY_URL }}
