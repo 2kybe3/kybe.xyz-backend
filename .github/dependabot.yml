@@ -12,7 +12,6 @@ updates:
       labels:
           - "dependencies"
     - package-ecosystem: docker-compose
-      versioning-strategy: increase
       directory: /
       schedule:
           interval: daily
