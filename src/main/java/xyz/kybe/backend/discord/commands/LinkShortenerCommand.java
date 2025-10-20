@@ -66,8 +66,9 @@ public class LinkShortenerCommand extends ListenerAdapter {
 			code = switch (mode) {
 				case "emoji" -> generateEmojiCode(8);
 				case "chinese" -> generateChineseCode(8);
-				case "full" -> generateFullUnicodeCode(1);
-				default -> generateAsciiCode(8);
+				case "full" -> generateFullUnicodeCode(2);
+				case "ascii" -> generateAsciiCode(8);
+				default -> generateFullUnicodeCode(2);
 			};
 		} while (shortLinkRepository.existsById(code));
 
