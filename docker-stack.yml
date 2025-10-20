@@ -11,7 +11,7 @@ services:
             - "8080:8080"
         environment:
             SPRING_PROFILES_ACTIVE: prod
-            SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/backend
+            SPRING_DATASOURCE_URL: jdbc:postgresql://backend_db:5432/backend
             SPRING_DATASOURCE_USERNAME: backend
             SPRING_DATASOURCE_PASSWORD: backend
         volumes:
