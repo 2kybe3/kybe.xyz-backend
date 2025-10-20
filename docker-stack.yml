@@ -1,6 +1,12 @@
+networks:
+    backend_default:
+        external: true
+
 services:
     backend:
         image: reg.kybe.xyz/kybe-pub/backend:latest
+        networks:
+            - backend_default
         ports:
             - "8080:8080"
         environment:
@@ -27,6 +33,8 @@ services:
 
     db:
         image: postgres:18-alpine
+        networks:
+            - backend_default
         environment:
             POSTGRES_DB: backend
             POSTGRES_USER: backend
