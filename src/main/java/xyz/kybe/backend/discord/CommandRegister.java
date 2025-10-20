@@ -51,7 +51,8 @@ public class CommandRegister {
 						.setIntegrationTypes(IntegrationType.USER_INSTALL, IntegrationType.GUILD_INSTALL),
 					Commands.slash("shorten-link", "Shorten a given link")
 						.setIntegrationTypes(IntegrationType.USER_INSTALL, IntegrationType.GUILD_INSTALL)
-						.addOption(OptionType.STRING, "url", "The URL to shorten")
+						.addOption(OptionType.STRING, "url", "The URL to shorten", true)
+						.addOption(OptionType.STRING, "mode", "The code generation mode: ascii, emoji or chinese", false)
 				).queue();
 
 			jda.addEventListener(directMessageCommand);

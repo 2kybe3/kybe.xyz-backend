@@ -10,14 +10,22 @@ import xyz.kybe.backend.db.repository.ShortLinkRepository;
 import xyz.kybe.backend.discord.DiscordBot;
 
 import java.util.Objects;
-import java.util.UUID;
+import java.util.Random;
 
 @Component
 public class LinkShortenerCommand extends ListenerAdapter {
 	private final DiscordBot discordBot;
 	private final ShortLinkRepository shortLinkRepository;
-
 	private final String prefix;
+	private final Random random = new Random();
+
+	private static final int[][] EMOJI_RANGES = {
+		{0x1F600, 0x1F64F}, // Emoticons
+		{0x1F300, 0x1F5FF}, // Misc Symbols & Pictographs
+		{0x1F680, 0x1F6FF}, // Transport & Map Symbols
+		{0x1F900, 0x1F9FF}, // Supplemental Symbols & Pictographs
+		{0x2600, 0x26FF}    // Misc symbols
+	};
 
 	public LinkShortenerCommand(
 		DiscordBot discordBot,
@@ -47,16 +55,54 @@ public class LinkShortenerCommand extends ListenerAdapter {
 
 		var existing = shortLinkRepository.getByRedirectUrl(url);
 		if (!existing.isEmpty()) {
-			event.reply(this.prefix+existing.getFirst().getCode()).queue();
+			event.reply(this.prefix + existing.getFirst().getCode()).queue();
 			return;
 		}
 
-		String code = UUID.randomUUID().toString().substring(0, 8);
+		String mode = event.getOption("mode") != null ? Objects.requireNonNull(event.getOption("mode")).getAsString().toLowerCase() : "ascii";
+
+		String code;
+		do {
+			code = switch (mode) {
+				case "emoji" -> generateEmojiCode(4);
+				case "chinese" -> generateChineseCode(4);
+				default -> generateAsciiCode(8);
+			};
+		} while (shortLinkRepository.existsById(code));
+
 		ShortLink shortLink = new ShortLink();
 		shortLink.setCode(code);
 		shortLink.setRedirectUrl(url);
 		shortLinkRepository.save(shortLink);
 
-		event.reply(this.prefix+code).queue();
+		event.reply(this.prefix + code).queue();
+	}
+
+	private String generateAsciiCode(int length) {
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		StringBuilder sb = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+			sb.append(chars.charAt(random.nextInt(chars.length())));
+		}
+		return sb.toString();
+	}
+
+	private String generateEmojiCode(int length) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			int[] range = EMOJI_RANGES[random.nextInt(EMOJI_RANGES.length)];
+			int codePoint = range[0] + random.nextInt(range[1] - range[0] + 1);
+			sb.append(Character.toChars(codePoint));
+		}
+		return sb.toString();
+	}
+
+	private String generateChineseCode(int length) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			int codePoint = 0x4E00 + random.nextInt(0x9FFF - 0x4E00 + 1);
+			sb.append((char) codePoint);
+		}
+		return sb.toString();
 	}
 }
