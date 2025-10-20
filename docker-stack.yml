@@ -1,12 +1,13 @@
 networks:
-    backend_network:
+    backend-net:
         driver: overlay
+        attachable: true
 
 services:
     backend:
         image: reg.kybe.xyz/kybe-pub/backend:latest
         networks:
-            - backend_network
+            - backend-net
         ports:
             - "80:80"
         environment:
@@ -36,7 +37,7 @@ services:
     db:
         image: postgres:18-alpine
         networks:
-            - backend_network
+            - backend-net
         environment:
             POSTGRES_DB: backend
             POSTGRES_USER: backend
