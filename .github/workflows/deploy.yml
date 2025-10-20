@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  IMAGE: reg.kybe.xyz/backend
+  IMAGE: reg.kybe.xyz/${{ vars.REGISTRY_USER }}/backend
   REGISTRY_URL: reg.kybe.xyz
   TAG: ${{ github.sha }}
 
