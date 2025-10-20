@@ -5,8 +5,6 @@ spring:
         url: "jdbc:postgresql://localhost:5432/backend"
         username: "backend"
         password: "backend"
-        hikari:
-            initialization-fail-timeout: 0
     jpa:
         hibernate:
             ddl-auto: "update"
