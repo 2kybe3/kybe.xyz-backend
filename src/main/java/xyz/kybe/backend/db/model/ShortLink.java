@@ -18,6 +18,6 @@ public class ShortLink {
 	@Column(nullable = false, unique = true)
 	private String code;
 
-	@Column(name ="redirect_url", nullable = false)
+	@Column(name = "redirect_url", nullable = false)
 	private String redirectUrl;
 }

@@ -20,15 +20,20 @@ import java.time.Instant;
 public class DiscordBot {
 	private static final Logger logger = LoggerFactory.getLogger(DiscordBot.class);
 
-	@Getter private final Instant startTime;
+	@Getter
+	private final Instant startTime;
 
 	private final String token;
 
-	@Getter private final String adminUserId;
-	@Getter private final String logChannelId;
+	@Getter
+	private final String adminUserId;
+	@Getter
+	private final String logChannelId;
 
-	@Getter private JDA jda;
-	@Getter private TextChannel logChannel;
+	@Getter
+	private JDA jda;
+	@Getter
+	private TextChannel logChannel;
 
 	public DiscordBot(
 		@Value("${discord.token}") String token,

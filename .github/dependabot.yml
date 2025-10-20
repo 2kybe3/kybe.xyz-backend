@@ -1,39 +1,39 @@
 version: 2
 updates:
-    - package-ecosystem: gradle
-      target-branch: "main"
-      directory: /
-      schedule:
-          interval: daily
-          time: "00:00"
-          timezone: Europe/Berlin
-      commit-message:
-          prefix: "gradle"
-      labels:
-          - "dependencies"
-    - package-ecosystem: docker-compose
-      directory: /
-      schedule:
-          interval: daily
-          time: "00:00"
-          timezone: Europe/Berlin
-      commit-message:
-          prefix: "docker-compose"
-    - package-ecosystem: docker
-      target-branch: "main"
-      directory: /
-      schedule:
-          interval: daily
-          time: "00:00"
-          timezone: Europe/Berlin
-      commit-message:
-          prefix: "docker"
-    - package-ecosystem: github-actions
-      target-branch: "main"
-      directory: /
-      schedule:
-          interval: daily
-          time: "00:00"
-          timezone: Europe/Berlin
-      commit-message:
-          prefix: "github-actions"
+    -   package-ecosystem: gradle
+        target-branch: "main"
+        directory: /
+        schedule:
+            interval: daily
+            time: "00:00"
+            timezone: Europe/Berlin
+        commit-message:
+            prefix: "gradle"
+        labels:
+            - "dependencies"
+    -   package-ecosystem: docker-compose
+        directory: /
+        schedule:
+            interval: daily
+            time: "00:00"
+            timezone: Europe/Berlin
+        commit-message:
+            prefix: "docker-compose"
+    -   package-ecosystem: docker
+        target-branch: "main"
+        directory: /
+        schedule:
+            interval: daily
+            time: "00:00"
+            timezone: Europe/Berlin
+        commit-message:
+            prefix: "docker"
+    -   package-ecosystem: github-actions
+        target-branch: "main"
+        directory: /
+        schedule:
+            interval: daily
+            time: "00:00"
+            timezone: Europe/Berlin
+        commit-message:
+            prefix: "github-actions"

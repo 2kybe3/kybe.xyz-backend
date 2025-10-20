@@ -14,6 +14,7 @@ docker-compose up -d
 ---
 
 ## [Live website](https://api.kybe.xyz)
+
 ![](http://status.kybe.xyz/api/badge/2/status)
 ![](http://status.kybe.xyz/api/badge/2/uptime)
 ![](http://status.kybe.xyz/api/badge/2/ping)

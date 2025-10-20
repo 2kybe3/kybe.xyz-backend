@@ -14,11 +14,6 @@ import java.util.Random;
 
 @Component
 public class LinkShortenerCommand extends ListenerAdapter {
-	private final DiscordBot discordBot;
-	private final ShortLinkRepository shortLinkRepository;
-	private final String prefix;
-	private final Random random = new Random();
-
 	private static final int[][] EMOJI_RANGES = {
 		{0x1F600, 0x1F64F}, // Emoticons
 		{0x1F300, 0x1F5FF}, // Misc Symbols & Pictographs
@@ -26,6 +21,10 @@ public class LinkShortenerCommand extends ListenerAdapter {
 		{0x1F900, 0x1F9FF}, // Supplemental Symbols & Pictographs
 		{0x2600, 0x26FF}    // Misc symbols
 	};
+	private final DiscordBot discordBot;
+	private final ShortLinkRepository shortLinkRepository;
+	private final String prefix;
+	private final Random random = new Random();
 
 	public LinkShortenerCommand(
 		DiscordBot discordBot,
