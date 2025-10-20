@@ -53,7 +53,7 @@ public class LinkShortenerCommand extends ListenerAdapter {
 			return;
 		}
 
-		String mode = event.getOption("mode") != null ? Objects.requireNonNull(event.getOption("mode")).getAsString().toLowerCase() : "ascii";
+		String mode = event.getOption("mode") != null ? Objects.requireNonNull(event.getOption("mode")).getAsString().toLowerCase() : "full";
 
 		String code;
 		do {
