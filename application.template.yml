@@ -1,0 +1,6 @@
+discord:
+    # https://discord.com/developers/applications
+    token: "discord-bot-token"
+    admin-id: "admin-discord-id"
+    # make sure the user is in the server of that channel
+    log-channel: "log-discord-channel-id"
