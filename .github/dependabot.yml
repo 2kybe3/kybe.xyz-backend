@@ -1,22 +1,40 @@
 version: 2
 updates:
     - package-ecosystem: gradle
-      versioning-strategy: increase
+      target-branch: "main"
       directory: /
       schedule:
           interval: daily
+          time: "00:00"
+          timezone: Europe/Berlin
+      commit-message:
+          prefix: "gradle"
+      labels:
+          - "dependencies"
     - package-ecosystem: docker-compose
       versioning-strategy: increase
       directory: /
       schedule:
           interval: daily
+          time: "00:00"
+          timezone: Europe/Berlin
+      commit-message:
+          prefix: "docker-compose"
     - package-ecosystem: docker
-      versioning-strategy: increase
+      target-branch: "main"
       directory: /
       schedule:
           interval: daily
+          time: "00:00"
+          timezone: Europe/Berlin
+      commit-message:
+          prefix: "docker"
     - package-ecosystem: github-actions
-      versioning-strategy: increase
+      target-branch: "main"
       directory: /
       schedule:
           interval: daily
+          time: "00:00"
+          timezone: Europe/Berlin
+      commit-message:
+          prefix: "github-actions"
