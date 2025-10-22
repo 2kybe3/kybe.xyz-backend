@@ -1,6 +1,5 @@
 services:
     backend:
-        build: .
         image: reg.kybe.xyz/kybe-pub/backend:latest
         ports:
             - "8080:8080"
