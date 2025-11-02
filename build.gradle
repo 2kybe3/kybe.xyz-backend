@@ -54,5 +54,5 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-scalar:2.8.13'
 
 	// Json
-	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.20.0'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.20.1'
 }
