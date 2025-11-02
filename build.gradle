@@ -37,7 +37,7 @@ dependencies {
 	implementation 'com.github.ben-manes.caffeine:caffeine'
 
 	// Discord
-	implementation 'net.dv8tion:JDA:6.1.0'
+	implementation 'net.dv8tion:JDA:6.1.1'
 
 	// Database
 	runtimeOnly 'org.postgresql:postgresql'
