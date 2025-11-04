@@ -50,8 +50,8 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	// OpenAPI
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-scalar:2.8.13'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.14'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-scalar:2.8.14'
 
 	// Json
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.20.0'
